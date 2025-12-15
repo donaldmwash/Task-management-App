@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow - Premium Job Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Using Phosphor Icons for a premium look -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="ph-fill ph-code-block"></i>
+                <span>TaskFlow</span>
+            </div>
+            
+            <ul class="nav-links">
+                <li class="active" data-view="dashboard">
+                    <i class="ph ph-squares-four"></i>
+                    <span>Dashboard</span>
+                </li>
+                <li data-view="kanban">
+                    <i class="ph ph-kanban"></i>
+                    <span>Board</span>
+                </li>
+                <li data-view="list">
+                    <i class="ph ph-list-dashes"></i>
+                    <span>List View</span>
+                </li>
+            </ul>
+
+            <div class="nav-footer">
+                <button id="theme-toggle" class="icon-btn">
+                    <i class="ph ph-moon"></i>
+                </button>
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=User&background=6366f1&color=fff" alt="User">
+                    <div class="user-info">
+                        <span class="name">My Workspace</span>
+                        <span class="role">Freelancer</span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <h1 id="page-header">Dashboard</h1>
+                    <span id="current-date" class="date-display">December 15, 2025</span>
+                </div>
+                
+                <div class="actions">
+                    <div class="search-bar">
+                        <i class="ph ph-magnifying-glass"></i>
+                        <input type="text" id="global-search" placeholder="Search jobs, tags...">
+                    </div>
+                    <button id="btn-add-job" class="btn-primary">
+                        <i class="ph ph-plus"></i>
+                        <span>New Job</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dynamic Views -->
+            <div id="content-area" class="content-area">
+                <!-- Dashboard View (Default) -->
+                <div id="view-dashboard" class="view-section active">
+                    <div class="stats-grid">
+                        <div class="stat-card" data-type="total">
+                            <div class="stat-icon"><i class="ph ph-briefcase"></i></div>
+                            <div class="stat-info">
+                                <h3>Total Jobs</h3>
+                                <span class="value" id="stat-total">0</span>
+                            </div>
+                        </div>
+                        <div class="stat-card" data-type="active">
+                            <div class="stat-icon warning"><i class="ph ph-lightning"></i></div>
+                            <div class="stat-info">
+                                <h3>In Progress</h3>
+                                <span class="value" id="stat-active">0</span>
+                            </div>
+                        </div>
+                        <div class="stat-card" data-type="completed">
+                            <div class="stat-icon success"><i class="ph ph-check-circle"></i></div>
+                            <div class="stat-info">
+                                <h3>Completed</h3>
+                                <span class="value" id="stat-completed">0</span>
+                            </div>
+                        </div>
+                        <div class="stat-card" data-type="pending">
+                            <div class="stat-icon danger"><i class="ph ph-clock-countdown"></i></div>
+                            <div class="stat-info">
+                                <h3>Pending</h3>
+                                <span class="value" id="stat-pending">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recent-section">
+                        <h2>Recent Activity</h2>
+                        <div id="recent-list" class="recent-list">
+                            <!-- Recent items will be injected here -->
+                            <div class="empty-state">
+                                <i class="ph ph-ghost"></i>
+                                <p>No recent jobs found.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kanban View -->
+                <div id="view-kanban" class="view-section">
+                    <div class="kanban-board">
+                        <div class="kanban-column" data-status="todo">
+                            <div class="column-header">
+                                <span class="dot todo"></span>
+                                <h2>To Do</h2>
+                                <span class="count" id="count-todo">0</span>
+                            </div>
+                            <div class="column-body" id="col-todo">
+                                <!-- Cards go here -->
+                            </div>
+                        </div>
+
+                        <div class="kanban-column" data-status="in-progress">
+                            <div class="column-header">
+                                <span class="dot progress"></span>
+                                <h2>In Progress</h2>
+                                <span class="count" id="count-progress">0</span>
+                            </div>
+                            <div class="column-body" id="col-in-progress">
+                                <!-- Cards go here -->
+                            </div>
+                        </div>
+
+                        <div class="kanban-column" data-status="review">
+                            <div class="column-header">
+                                <span class="dot review"></span>
+                                <h2>Review</h2>
+                                <span class="count" id="count-review">0</span>
+                            </div>
+                            <div class="column-body" id="col-review">
+                                <!-- Cards go here -->
+                            </div>
+                        </div>
+
+                        <div class="kanban-column" data-status="done">
+                            <div class="column-header">
+                                <span class="dot done"></span>
+                                <h2>Done</h2>
+                                <span class="count" id="count-done">0</span>
+                            </div>
+                            <div class="column-body" id="col-done">
+                                <!-- Cards go here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- List View -->
+                <div id="view-list" class="view-section">
+                    <div class="list-container">
+                        <table class="job-table">
+                            <thead>
+                                <tr>
+                                    <th>Job Title</th>
+                                    <th>Status</th>
+                                    <th>Priority</th>
+                                    <th>Due Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="job-table-body">
+                                <!-- Rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal for New/Edit Job -->
+    <div id="job-modal" class="modal-overlay hidden">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modal-title">Create New Job</h2>
+                <button class="close-modal"><i class="ph ph-x"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="job-form">
+                    <input type="hidden" id="job-id">
+                    
+                    <div class="form-group">
+                        <label for="job-title">Job Title</label>
+                        <input type="text" id="job-title" placeholder="e.g. Redesign Website Homepage" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="job-desc">Description</label>
+                        <textarea id="job-desc" rows="3" placeholder="Add details about the job..."></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="job-status">Status</label>
+                            <select id="job-status">
+                                <option value="todo">To Do</option>
+                                <option value="in-progress">In Progress</option>
+                                <option value="review">Review</option>
+                                <option value="done">Done</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="job-priority">Priority</label>
+                            <select id="job-priority">
+                                <option value="low">Low</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="job-date">Due Date</label>
+                            <input type="date" id="job-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="job-tags">Tags (comma separated)</label>
+                            <input type="text" id="job-tags" placeholder="e.g. Design, Frontend, Urgent">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn-text close-modal">Cancel</button>
+                        <button type="submit" class="btn-primary">Save Job</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
